@@ -24,6 +24,12 @@ So I upgraded: an i9-14900KF, 32 GB of DDR5, and an RTX 5070, still running Ubun
 
 That was the turning point. I had several other PCs sitting idle, so instead of buying yet another bigger box, I started thinking about turning what I already owned into a cluster — spreading the load across small, efficient machines that could run 24×7 without spiking my power bill.
 
+The chart below is the lab's power draw, tracked in Home Assistant from a smart plug and from the UPS — the UPS is monitored by a [NUT](https://networkupstools.org/) service running on the cluster.
+
+![Home Assistant chart of the homelab's power consumption over time, pulled from a smart plug and a NUT-monitored UPS.](/assets/images/power-usage-home-assistant.jpg)
+
+The honest accounting: the old single node idled at about 110 W. The new always-on core — three machines, a proper 3-2-1 backup, better support for larger AI models, and 96 GB of unified memory — idles at about 120 W. So in raw watts I didn't really come out ahead. What I got instead is a dynamic, decentralized lab that does far more per watt: the heavy compute nodes stay powered off until I need them, and nothing is a single point of failure anymore.
+
 ## Decision 1: Cluster What I Already Own, and Keep It Power-Efficient
 
 Here's the inventory I was working with — a genuinely mismatched set of mini PCs, tower CPUs, and one enterprise leftover:
