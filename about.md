@@ -10,7 +10,10 @@ home, documented phase by phase on the way to hosting AI infrastructure.
 
 The posts here are the narrative. The code lives in its own repos:
 
-- [homelab-ops](https://github.com/deepchhaiya/homelab-ops) — infrastructure and automation
-- <!-- TODO: add links to Suricata / VT-scanner / OPNsense-pipeline repos -->
+- [Homelab-ops](https://github.com/deepchhaiya/Homelab-ops) — infrastructure and automation
+<!-- TODO: link the Suricata / VT-scanner / OPNsense-pipeline repos once they're public -->
 
-Find me on [GitHub](https://github.com/deepchhaiya).
+Elsewhere:
+
+- [Portfolio](https://portfolio.dkghar.duckdns.org)
+- [GitHub](https://github.com/deepchhaiya)
