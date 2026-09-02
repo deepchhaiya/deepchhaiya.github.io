@@ -41,6 +41,9 @@ After some research and budget math, I picked up a **GMKtek EVO-X2** with 96 GB 
 
 With that decided, I hit the next problem: my main server was no longer a 24×7 machine, which meant I needed to rethink storage entirely — and put a real **3-2-1 backup strategy** in place instead of hoping nothing failed. The Peladn had no clean way to attach multiple HDDs over PCIe, but it did have a USB-C Gen 3 Thunderbolt port, so I added a DAS with 11 TB of drives as the primary array, plus a 26 TB external Seagate HDD for periodic backups connected to Evo-x2 which later I decided to include as my alternate control node and 24 x 7 machine.
 
+![Hardware inventory: six reused machines plus the purchased EVO-X2, grouped into always-on 24×7 nodes and on-demand worker nodes, with an 11 TB DAS on the Peladn and a 26 TB drive on the EVO-X2 for backups.](/assets/images/hardware-inventory.svg)
+*The fleet at a glance — what stays on, what gets woken up, and where the storage hangs.*
+
 ## Decision 2: Picking the OS Stack
 
 I wanted an OS setup that made backups straightforward and kept Docker overhead to a minimum. After comparing options, I landed on:

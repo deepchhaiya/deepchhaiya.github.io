@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-labelledby="hi-title hi-desc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <title id="hi-title">Homelab hardware inventory</title>
+  <desc id="hi-desc">Six machines already owned plus one purchased GMKtek EVO-X2, grouped by role. Always-on 24x7 nodes: Raspberry Pi 4 (4 GB, Talos on bare metal, control plane), Peladn mini PC (Ryzen 7 7840HS, 32 GB, Proxmox), GMKtek EVO-X2 (96 GB unified memory, AI anchor and alternate control node). On-demand worker nodes powered on for extra compute: main server (i9-14900KF, RTX 5070, ~13 TB), Windows PC (i7-12700K, RTX 3070), Dell R610 (dual Xeon E5645, Proxmox), Intel NUC (i3-4010). Storage for the 3-2-1 backup strategy: an 11 TB DAS (two 12 TB Toshiba N300 over Thunderbolt) attached to the Peladn as the primary array, and a 26 TB Seagate drive on the EVO-X2 as the Proxmox Backup Server target with 30 daily, 12 monthly and 1 yearly retention.</desc>
+
+  <rect width="920" height="520" rx="10" fill="#0d1117"/>
+  <text x="28" y="34" fill="#e6edf3" font-size="18" font-weight="700">Hardware inventory</text>
+  <text x="28" y="53" fill="#8b949e" font-size="12">Six machines already owned + one bought (EVO-X2), split by how they run</text>
+
+  <!-- ALWAYS-ON -->
+  <g transform="translate(28,68)">
+    <clipPath id="hi-a"><rect width="864" height="126" rx="8"/></clipPath>
+    <g clip-path="url(#hi-a)">
+      <rect width="864" height="126" fill="#161b22"/>
+      <rect width="864" height="29" fill="#3fb950" opacity="0.13"/>
+    </g>
+    <rect width="864" height="126" rx="8" fill="none" stroke="#30363d"/>
+    <circle cx="18" cy="14.5" r="4.5" fill="#3fb950"/>
+    <text x="30" y="19" fill="#3fb950" font-size="12.5" font-weight="700" letter-spacing="0.5">ALWAYS-ON &#183; 24&#215;7</text>
+    <text x="844" y="19" text-anchor="end" fill="#8b949e" font-size="11">runs the cluster + backups</text>
+    <text x="20" y="52" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Raspberry Pi 4</tspan><tspan fill="#8b949e">   4 GB RAM &#183; 128 GB SSD &#183; Talos on bare metal &#183; cluster control plane</tspan></text>
+    <text x="20" y="80" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Peladn mini PC</tspan><tspan fill="#8b949e">   Ryzen 7 7840HS (8c/16t) &#183; 32 GB &#183; 1 TB SSD &#183; Proxmox + Ubuntu VM</tspan></text>
+    <text x="20" y="108" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">GMKtek EVO-X2</tspan><tspan fill="#bc8cff" font-weight="700"> [bought]</tspan><tspan fill="#8b949e">   96 GB unified memory &#183; AI workload anchor &#183; alternate control node</tspan></text>
+  </g>
+
+  <!-- ON-DEMAND -->
+  <g transform="translate(28,210)">
+    <clipPath id="hi-b"><rect width="864" height="154" rx="8"/></clipPath>
+    <g clip-path="url(#hi-b)">
+      <rect width="864" height="154" fill="#161b22"/>
+      <rect width="864" height="29" fill="#58a6ff" opacity="0.13"/>
+    </g>
+    <rect width="864" height="154" rx="8" fill="none" stroke="#30363d"/>
+    <circle cx="18" cy="14.5" r="4.5" fill="#58a6ff"/>
+    <text x="30" y="19" fill="#58a6ff" font-size="12.5" font-weight="700" letter-spacing="0.5">ON-DEMAND WORKERS</text>
+    <text x="844" y="19" text-anchor="end" fill="#8b949e" font-size="11">powered on when extra compute is needed</text>
+    <text x="20" y="52" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Main server</tspan><tspan fill="#8b949e">   i9-14900KF &#183; 32 GB DDR5 &#183; RTX 5070 &#183; ~13 TB across SSD/HDD/external</tspan></text>
+    <text x="20" y="80" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Windows PC</tspan><tspan fill="#8b949e">   i7-12700K (12c/20t) &#183; 32 GB &#183; RTX 3070 &#183; 1 TB SSD</tspan></text>
+    <text x="20" y="108" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Dell R610</tspan><tspan fill="#8b949e">   2&#215; Xeon E5645 (12c/24t) &#183; ~80 GB DDR3 &#183; ~1.2 TB SAS &#183; Proxmox</tspan></text>
+    <text x="20" y="136" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Intel NUC</tspan><tspan fill="#8b949e">   i3-4010 &#183; 8 GB RAM &#183; 256 GB SSD</tspan></text>
+  </g>
+
+  <!-- STORAGE -->
+  <g transform="translate(28,380)">
+    <clipPath id="hi-c"><rect width="864" height="98" rx="8"/></clipPath>
+    <g clip-path="url(#hi-c)">
+      <rect width="864" height="98" fill="#161b22"/>
+      <rect width="864" height="29" fill="#d29922" opacity="0.15"/>
+    </g>
+    <rect width="864" height="98" rx="8" fill="none" stroke="#30363d"/>
+    <circle cx="18" cy="14.5" r="4.5" fill="#d29922"/>
+    <text x="30" y="19" fill="#d29922" font-size="12.5" font-weight="700" letter-spacing="0.5">STORAGE</text>
+    <text x="844" y="19" text-anchor="end" fill="#8b949e" font-size="11">3-2-1 backup</text>
+    <text x="20" y="52" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">DAS &#183; 11 TB</tspan><tspan fill="#8b949e">   2&#215; 12 TB Toshiba N300 (ASMedia USB) &#8594; Peladn over Thunderbolt &#183; primary array</tspan></text>
+    <text x="20" y="80" font-size="12.5"><tspan fill="#e6edf3" font-weight="700">Seagate &#183; 26 TB</tspan><tspan fill="#8b949e">   &#8594; EVO-X2 &#183; Proxmox Backup Server target &#183; 30 daily / 12 monthly / 1 yearly</tspan></text>
+  </g>
+
+  <text x="28" y="502" fill="#8b949e" font-size="11">Every machine runs a Talos VM on Proxmox &#8212; except the Pi 4, which runs Talos on bare metal.</text>
+</svg>
