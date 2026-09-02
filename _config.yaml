@@ -1,0 +1,56 @@
+# --- Site identity ---
+title: "Deep's Homelab"
+tagline: "Build logs on the way to AI infra"
+description: >-
+  Homelab build logs, phase by phase — hardware, networking, virtualization,
+  storage and self-hosted services — on the way to running AI infrastructure at home.
+author:
+  name: "Deep Chhaiya"
+  email: "deepkchhaiya@gmail.com"
+
+# --- URLs ---
+url: "https://deepchhaiya.github.io"
+baseurl: ""
+
+# --- Build ---
+theme: minima
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
+timezone: America/Chicago
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# --- Minima theme options (minima ~> 2.5) ---
+minima:
+  skin: dark
+  date_format: "%b %-d, %Y"
+
+# Pages shown in the site header nav
+header_pages:
+  - about.md
+
+show_excerpts: true
+
+# --- Social / SEO ---
+github_username: deepchhaiya
+
+# --- Post defaults ---
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: false
+
+# --- Exclude from build ---
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .gitignore
