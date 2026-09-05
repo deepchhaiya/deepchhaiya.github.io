@@ -10,7 +10,7 @@ excerpt: >-
   so no secret key ever touches disk.
 ---
 
-This part mainly focusses on setting up different machines and GitHub repo. I started exploring the different options and settled on Talos for Kubernetes not only because it was immutable and secure but also because I found the no-SSH and API-only-driven approach fascinating to learn and test.
+This part mainly focusses on setting up different machines and GitHub repo. I started exploring the different options and settled on Talos for Kubernetes not only because it was immutable and secure but also because I found the no-SSH and API-only-driven approach fascinating to learn and test. The full reasoning is written up as [ADR-001: Talos over K3s](https://github.com/deepchhaiya/Homelab-ops/blob/main/ADR/ADR-001-talos-over-k3s.md) in the repo.
 
 #### Step - 1: Setting up Proxmox Virtual Environment in my Peladn Mini PC and other PCs
 
