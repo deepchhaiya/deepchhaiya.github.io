@@ -14,7 +14,7 @@ This part mainly focusses on setting up different machines and GitHub repo. I st
 
 #### Step - 1: Setting up Proxmox Virtual Environment in my Peladn Mini PC and other PCs
 
-I created a bootable USB with [Proxmox Virtual Environment 9.2](https://proxmox.com/en/downloads/proxmox-virtual-environment) using [Rufus](https://rufus.ie/en/) and replaced the default vendor-provided Windows 11. Replicated the same for my Intel NUC and GMKtek Evo X2. This was though a bit time-consuming but was a straightforward setup.
+I created a bootable USB with [Proxmox Virtual Environment 9.2](https://proxmox.com/en/downloads/proxmox-virtual-environment) using [Rufus](https://rufus.ie/en/) and replaced the default vendor-provided Windows 11. Replicated the same for my Intel NUC, GMKtek Evo X2, and my main i9 server, which was still running Ubuntu with Docker up to this point. The Dell R610 was already on Proxmox 8 from earlier, so instead of a fresh install I just upgraded it in place to Proxmox 9 with `apt`. This was though a bit time-consuming but was a straightforward setup.
 
 **Note**: *Proxmox VE doesn't like Wi-Fi, and anyways the best practice for a 24x7 lab environment is to connect an Ethernet cable. Initially during my setup I still didn't have the Lanner SED firewall and just had a simple home router connected to an 8-Gigabit-Ethernet-port unmanaged switch.*
 
@@ -34,7 +34,9 @@ cd Homelab-ops
 
 #### Step - 3: Setting up my local machine/laptop with SOPS, Talosctl and Kubectl
 
-I implemented a **Zero-Trust** workstation model. My infrastructure secrets are encrypted using SOPS and Age. The private keys are never stored on disk; instead, I use the Bitwarden CLI to inject the keys from my self-hosted Vaultwarden directly into the environment memory only during the encryption process.
+Before anything from that repo can go into Flux or Argo CD, it needs a way to hold secrets safely — that's what this step is for. I implemented a **Zero-Trust** workstation model. My infrastructure secrets are encrypted using SOPS and Age. The private keys are never stored on disk. I use the Bitwarden CLI to fetch the keys from my self-hosted Vaultwarden directly into the environment memory only during the encryption process.
+
+![Zero-trust secrets flow: age-keygen generates a keypair once, the private key is stored in Vaultwarden, the Bitwarden CLI pulls it into session memory only, SOPS uses that in-memory key to encrypt or decrypt files, and only the encrypted files are committed to the GitHub repo.](/assets/images/sops-secrets-flow.svg)
 
 So below are the steps to install the needed tools:
 
@@ -136,5 +138,11 @@ cat test-secrets.yaml
 # To decrypt and view:
 sops --decrypt test-secrets.yaml
 ```
+
+## Where Things Stand After This Part
+
+Proxmox is on the Peladn, the Intel NUC, the GMKtek EVO-X2, and the main i9 server, plus the Dell R610 upgraded in place to version 9. The [Homelab-ops](https://github.com/deepchhaiya/Homelab-ops) repo exists and is where GitOps will eventually manage everything. The SOPS key lives in Vaultwarden and retrieved when needed to encrypt the YAMLs or its content later.
+
+What's left to do: Flux or Argo CD actually reading and decrypting these secrets from the repo. That's for a later part, once the cluster itself exists.
 
 I'll cover Talos VM setup and Raspberry Pi setup in the upcoming part.
