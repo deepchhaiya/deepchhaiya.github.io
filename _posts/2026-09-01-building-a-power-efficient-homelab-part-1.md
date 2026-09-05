@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building a Power-Efficient Homelab, Part 1: The Hardware and Platform"
+title: "Building a Power-Efficient Homelab, Part 1: Overview"
 date: 2026-09-01 22:44:00 -0500
 categories: homelab
 tags: [homelab, proxmox, talos, kubernetes, power-efficiency, networking]
@@ -87,7 +87,7 @@ I also printed a set of ducts to route airflow for the mini PCs, and repurposed 
 
 ## Decision 5: Network and Security
 
-None of this matters if the network underneath it is an afterthought. I picked up a **Lanner SED7551** off eBay and installed **OPNsense** on it as the main router for the whole house. That gave me proper firewall rules plus **Suricata** for IDS/IPS, DNS-level ad and threat blocking through **Unbound**, and five bridged ports feeding an 8-port switch in the rack. **Deco** units handle Wi-Fi as access points, with 2.5 Gbps LAN throughout.
+None of this matters if the network underneath it is an afterthought. I picked up a **Lanner SED7551** off eBay and installed **OPNsense** on it as the main router for the whole house. That gave me proper firewall rules plus **Suricata** for IDS/IPS, DNS-level ad and threat blocking through **Unbound**, and five bridged ports feeding an 8-port switch in the rack. **Deco** units handle Wi-Fi as access points, with 2.5 Gbps LAN throughout. More details in later dedicated section.
 
 ## Where Things Stand Now
 
