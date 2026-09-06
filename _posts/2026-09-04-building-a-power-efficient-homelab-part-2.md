@@ -14,7 +14,9 @@ This part mainly focusses on setting up different machines and GitHub repo. I st
 
 #### Step - 1: Setting up Proxmox Virtual Environment in my Peladn Mini PC and other PCs
 
-I created a bootable USB with [Proxmox Virtual Environment 9.2](https://proxmox.com/en/downloads/proxmox-virtual-environment) using [Rufus](https://rufus.ie/en/) and replaced the default vendor-provided Windows 11. Replicated the same for my Intel NUC, GMKtek Evo X2, and my main i9 server, which was still running Ubuntu with Docker up to this point. The Dell R610 was already on Proxmox 8 from earlier, so instead of a fresh install I just upgraded it in place to Proxmox 9 with `apt`. This was though a bit time-consuming but was a straightforward setup.
+I created a bootable USB with [Proxmox Virtual Environment 9.2](https://proxmox.com/en/downloads/proxmox-virtual-environment) using [Rufus](https://rufus.ie/en/) and replaced the default vendor-provided Windows 11. Replicated the same for my Intel NUC and GMKtek Evo X2. The Dell R610 was already on Proxmox 8 from earlier, so instead of a fresh install I just upgraded it in place to Proxmox 9 with `apt`. This was though a bit time-consuming but was a straightforward setup.
+
+The main i9 server was the exception. It was still running Ubuntu with Docker and hosting everything, so I left it alone for now. I only migrated it much later — once the Peladn and the Kubernetes cluster (covered in the next parts) had taken over all its workloads, I wiped it and installed Proxmox there too.
 
 **Note**: *Proxmox VE doesn't like Wi-Fi, and anyways the best practice for a 24x7 lab environment is to connect an Ethernet cable. Initially during my setup I still didn't have the Lanner SED firewall and just had a simple home router connected to an 8-Gigabit-Ethernet-port unmanaged switch.*
 
@@ -141,7 +143,7 @@ sops --decrypt test-secrets.yaml
 
 ## Where Things Stand After This Part
 
-Proxmox is on the Peladn, the Intel NUC, the GMKtek EVO-X2, and the main i9 server, plus the Dell R610 upgraded in place to version 9. The [Homelab-ops](https://github.com/deepchhaiya/Homelab-ops) repo exists and is where GitOps will eventually manage everything. The SOPS key lives in Vaultwarden and retrieved when needed to encrypt the YAMLs or its content later.
+Proxmox is on the Peladn, the Intel NUC, and the GMKtek EVO-X2, plus the Dell R610 upgraded in place to version 9. The main i9 server is still on Docker for now, carrying the live services until the cluster can take over. The [Homelab-ops](https://github.com/deepchhaiya/Homelab-ops) repo exists and is where GitOps will eventually manage everything. The SOPS key lives in Vaultwarden and retrieved when needed to encrypt the YAMLs or its content later.
 
 What's left to do: Flux or Argo CD actually reading and decrypting these secrets from the repo. That's for a later part, once the cluster itself exists.
 
