@@ -15,5 +15,5 @@ The posts here are the narrative. The code lives in its own repos:
 
 Elsewhere:
 
-- [Portfolio](https://portfolio.dkghar.duckdns.org)
+- [Portfolio](/portfolio/)
 - [GitHub](https://github.com/deepchhaiya)

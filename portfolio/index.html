@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deep Chhaiya — Site Reliability · Observability · Cloud Engineer</title>
+<meta name="description" content="Deep Chhaiya — Site Reliability & Observability Engineer. 10+ years across cloud infrastructure, monitoring/observability, and large-scale network automation. AWS SME (ELB/CloudWatch/EventBridge), Kubernetes, Prometheus/Grafana/Loki." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #eef2f8;
+    --bg-dark: #0b1220;
+    --text: #0e1726;
+    --muted: #51607a;
+    --accent: #1d4ed8;
+    --accent-dark: #1b357a;
+    --accent-soft: #e6edfb;
+    --border: #dde3ee;
+    --shadow: 0 12px 32px -14px rgba(15, 23, 42, 0.28);
+    --radius: 14px;
+    --maxw: 1080px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  section { padding: 84px 0; }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  h2.title { font-size: clamp(1.7rem, 3.2vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; }
+  .lead { color: var(--muted); max-width: 640px; margin-top: 12px; }
+
+  /* NAV */
+  header.nav { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(12px); background: rgba(255,255,255,0.85); border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-weight: 800; letter-spacing: -0.02em; font-size: 1.05rem; }
+  .brand span { color: var(--accent); }
+  nav.links { display: flex; gap: 26px; align-items: center; }
+  nav.links a { color: var(--muted); font-weight: 500; font-size: 0.93rem; transition: color .15s; }
+  nav.links a:hover { color: var(--text); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; font-weight: 600; font-size: 0.92rem; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--accent); transition: transform .15s, background .15s, box-shadow .15s; cursor: pointer; }
+  .btn:hover { background: var(--accent-dark); border-color: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow); }
+  /* Resume button in the nav — force white text (override nav.links a muted color) */
+  nav.links a.btn, nav.links a.btn:hover { color: #fff; }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .btn.ghost:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  .menu-toggle { display: none; background: none; border: 0; font-size: 1.5rem; cursor: pointer; color: var(--text); }
+
+  /* HERO */
+  .hero { position: relative; overflow: hidden; padding: 84px 0; }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(820px 420px at 82% -5%, rgba(29,78,216,0.18), transparent 60%), radial-gradient(560px 320px at 0% 8%, rgba(29,78,216,0.10), transparent 55%), var(--bg); }
+  .hero-inner { display: grid; grid-template-columns: 1.45fr 1fr; gap: 44px; align-items: center; }
+  .hello { color: var(--accent); font-weight: 600; font-size: 1.05rem; }
+  .hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.7rem); font-weight: 800; letter-spacing: -0.035em; margin: 6px 0 4px; }
+  .hero .role { font-size: clamp(1.02rem, 2.2vw, 1.35rem); font-weight: 600; color: var(--accent-dark); }
+  .hero p.intro { color: var(--muted); max-width: 620px; margin: 20px 0 26px; font-size: 1.05rem; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .socials { display: flex; gap: 12px; margin-top: 24px; }
+  .socials a { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border); color: var(--muted); background: #fff; transition: all .15s; }
+  .socials a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+  .socials svg { width: 20px; height: 20px; }
+  /* headshot */
+  .hero-photo { justify-self: center; }
+  .hero-photo .frame { width: 300px; height: 300px; border-radius: 26px; overflow: hidden; border: 5px solid #fff; box-shadow: var(--shadow); background: linear-gradient(135deg, var(--accent), var(--accent-dark)); display: flex; align-items: center; justify-content: center; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .hero-photo .monogram { color: #fff; font-size: 5.5rem; font-weight: 800; letter-spacing: -0.04em; }
+  .stats { display: flex; gap: 38px; margin-top: 44px; flex-wrap: wrap; }
+  .stat b { display: block; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stat span { color: var(--muted); font-size: 0.9rem; }
+
+  /* ABOUT */
+  .about { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about p { font-size: 1.08rem; color: #2c3852; max-width: 820px; }
+
+  /* SKILLS */
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 36px; }
+  .skill-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; transition: box-shadow .2s, transform .2s; }
+  .skill-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .skill-card h3 { font-size: 1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .skill-card h3 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--accent-soft); color: var(--accent-dark); font-size: 0.82rem; font-weight: 500; padding: 5px 11px; border-radius: 8px; }
+
+  /* EXPERIENCE */
+  .exp { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .timeline { margin-top: 38px; border-left: 2px solid var(--border); }
+  .job { position: relative; padding: 0 0 34px 30px; }
+  .job::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg-alt); }
+  .job:last-child { padding-bottom: 0; }
+  .job .role { font-weight: 700; font-size: 1.1rem; }
+  .job .meta { color: var(--muted); font-size: 0.92rem; margin: 2px 0 10px; }
+  .job .meta b { color: var(--accent-dark); font-weight: 600; }
+  .job .summary { color: #33415c; font-weight: 500; font-size: 0.97rem; margin: 0 0 12px; padding-left: 12px; border-left: 3px solid var(--accent); }
+  .job ul { list-style: none; display: grid; gap: 7px; }
+  .job ul li { position: relative; padding-left: 20px; color: #34415c; font-size: 0.96rem; }
+  .job ul li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+
+  /* CERT TILES */
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); gap: 16px; margin-top: 36px; }
+  .cert-tile { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 18px; display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--text); transition: box-shadow .2s, transform .2s, border-color .2s; }
+  .cert-tile:hover { box-shadow: var(--shadow); transform: translateY(-4px); border-color: #c4d3f3; }
+  .cert-tile .logo { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .cert-tile .logo img { max-width: 100%; max-height: 100%; }
+  .cert-tile .logo.badge { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; border-radius: 16px; font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em; }
+  .cert-tile .cname { font-weight: 700; font-size: 0.96rem; line-height: 1.35; }
+  .cert-tile .cissuer { color: var(--muted); font-size: 0.84rem; margin-top: 7px; }
+  .cert-tile .verify { color: var(--accent); font-weight: 600; font-size: 0.84rem; margin-top: 11px; }
+
+  /* PUBLICATIONS */
+  .pub-list { display: grid; gap: 14px; margin-top: 34px; }
+  .pub { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; transition: box-shadow .2s; }
+  .pub:hover { box-shadow: var(--shadow); }
+  .pub b { font-weight: 700; }
+  .pub span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 3px; }
+  .pub .go { white-space: nowrap; font-weight: 600; }
+
+  /* PROJECTS */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 36px; }
+  .proj { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; transition: box-shadow .2s, transform .2s, border-color .2s; }
+  .proj:hover { box-shadow: var(--shadow); transform: translateY(-4px); border-color: #c4d3f3; }
+  .proj .ico { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 14px; }
+  .proj h3 { font-size: 1.08rem; line-height: 1.35; }
+  .proj p { color: var(--muted); font-size: 0.94rem; margin: 10px 0 14px; flex: 1; }
+  .proj .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proj .tags span { font-size: 0.74rem; color: var(--muted); background: var(--bg-alt); border: 1px solid var(--border); padding: 3px 8px; border-radius: 6px; }
+  .proj a.more { margin-top: 14px; font-weight: 600; font-size: 0.9rem; }
+
+  /* HOMELAB */
+  .homelab { background: var(--bg-dark); color: #e2e8f0; position: relative; overflow: hidden; }
+  .homelab::before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(700px 360px at 85% -10%, rgba(37,99,235,0.28), transparent 60%); }
+  .homelab .wrap { position: relative; z-index: 1; }
+  .homelab .title { color: #fff; }
+  .homelab .lead { color: #94a3b8; }
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+  /* stack the 3 tier cards vertically on tablets + phones (avoids cramped columns) */
+  @media (max-width: 900px) { .tiers { grid-template-columns: 1fr; } }
+  .tier { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 22px; }
+  .tier .badge { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; color: #93b4fb; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tier .hw { word-break: break-word; }
+  .tier, .feat { overflow-wrap: anywhere; }
+  .tier h3 { color: #fff; font-size: 1.1rem; margin: 8px 0 4px; }
+  .tier .hw { color: #94a3b8; font-size: 0.88rem; margin-bottom: 10px; }
+  .tier p { color: #cbd5e1; font-size: 0.92rem; }
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 22px; }
+  .feat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px; transition: background .2s; }
+  .feat:hover { background: rgba(255,255,255,0.08); }
+  .feat h4 { color: #fff; font-size: 0.98rem; margin-bottom: 7px; }
+  .feat p { color: #94a3b8; font-size: 0.88rem; }
+  .feat .em { color: #cbd5e1; }
+
+  /* EDUCATION */
+  .edu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 34px; }
+  .edu { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .edu b { font-weight: 700; }
+  .edu span { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 3px; }
+
+  /* CONTACT */
+  .contact { background: var(--bg-dark); color: #e2e8f0; }
+  .contact .title { color: #fff; }
+  .contact .lead { color: #94a3b8; }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 34px; }
+  .contact-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; transition: background .2s; }
+  .contact-card:hover { background: rgba(255,255,255,0.08); }
+  .contact-card .k { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-card a, .contact-card .v { color: #fff; font-weight: 600; word-break: break-word; }
+  footer { background: var(--bg-dark); color: #64748b; text-align: center; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.88rem; }
+
+  @media (max-width: 820px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-photo { order: -1; justify-self: start; }
+    .hero-photo .frame { width: 200px; height: 200px; }
+    .edu-list { grid-template-columns: 1fr; }
+    /* stack the homelab tiers + feature cards cleanly (no awkward 2+1 wrap) */
+    .tiers, .feat-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    nav.links { position: fixed; inset: 64px 0 auto 0; background: #fff; flex-direction: column; gap: 0; padding: 8px 0; border-bottom: 1px solid var(--border); display: none; }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 12px 24px; width: 100%; }
+    nav.links a.btn { margin: 10px 24px; justify-content: center; }
+    .menu-toggle { display: block; }
+    section { padding: 60px 0; }
+  }
+  @media print {
+    header.nav, .menu-toggle, .hero-actions, .socials, .contact, footer, .hero-photo { display: none !important; }
+    body { color: #000; }
+    section { padding: 16px 0; page-break-inside: avoid; }
+    .skill-card, .proj, .cert-tile, .edu, .job, .pub { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">Deep<span>.</span>Chhaiya</div>
+    <button class="menu-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+    <nav class="links" id="navlinks">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#homelab">Homelab</a>
+      <a href="#skills">Skills</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+      <a class="btn" href="javascript:window.print()">Resume ↓</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="hello">Hello, I'm</p>
+      <h1>Deep Chhaiya</h1>
+      <p class="role">Site Reliability · Observability · Cloud Infrastructure Engineer</p>
+      <p class="intro">
+        <b>10+ years</b> keeping resilient, observable platforms running at scale — an AWS
+        <b>observability SME</b> (ELB, CloudWatch, EventBridge) who cuts MTTR with internal tooling,
+        automates infrastructure with Python, Ansible &amp; Terraform, and <b>operates a production-grade
+        Kubernetes platform</b> with a full Prometheus/Grafana/Loki/VictoriaMetrics observability stack.
+        I pair deep <b>network engineering</b> (BGP, routing, 11k+ device automation) with modern SRE
+        practice — SLOs, incident response, and GitOps — and today lead a reliability function at Wasabi
+        building AI-driven diagnostics for S3-compatible storage. AWS Certified Solutions Architect &amp;
+        AI Practitioner.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+      <div class="socials">
+        <a href="mailto:deepkchhaiya@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+        <a href="https://linkedin.com/in/deep-chhaiya" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.2 8.65 21 11 21 14.1V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21H9z"/></svg></a>
+        <a href="https://github.com/deepchhaiya" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10 10 0 0 0 12 2z"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="frame">
+        <img src="profile.jpg" alt="Deep Chhaiya" onerror="this.style.display='none'; document.getElementById('monogram').style.display='block';" />
+        <span class="monogram" id="monogram" style="display:none;">DC</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>10+</b><span>Years experience</span></div>
+      <div class="stat"><b>6×</b><span>Certs &amp; SME badges</span></div>
+      <div class="stat"><b>11k+</b><span>Devices migrated</span></div>
+      <div class="stat"><b>60%</b><span>MTTR reduction</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp" id="experience">
+  <div class="wrap">
+    <p class="eyebrow">Where I've worked</p>
+    <h2 class="title">Experience</h2>
+    <div class="timeline">
+      <div class="job">
+        <div class="role">Senior Technical Support Engineer</div>
+        <div class="meta"><b>Wasabi Technologies</b> — Dallas–Fort Worth, TX (Remote) · Jul 2024 – Present</div>
+        <div class="summary">Leading a reliability function and an AI-driven diagnostics initiative for S3-compatible object storage at scale.</div>
+        <ul>
+          <li>Lead a team of 4 Cloud Support Engineers and serve as senior escalation point for complex S3-compatible object storage, networking, and cloud infrastructure issues.</li>
+          <li><b>Leading development of an AI-powered diagnostics tool</b> that analyzes load-balancer, server, and storage logs alongside large-scale operational data records — accelerating root-cause analysis across the object-storage platform.</li>
+          <li>Architected a Trino-based log analyzer for Wasabi S3 buckets, reducing incident investigation time by ~40%.</li>
+          <li>Built Jira status-tracking and Salesforce process automation with Python and REST APIs; containerized internal tooling with Docker for future productization.</li>
+          <li>Engineered RBQL-based log-analysis frameworks standardized across the engineering org, and authored runbooks that cut repeat escalations.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">Cloud Support Engineer II — Networking &amp; Monitoring</div>
+        <div class="meta"><b>Amazon Web Services (AWS)</b> — Dallas, TX · Mar 2023 – Jul 2024</div>
+        <div class="summary">SME escalation authority for ELB, CloudWatch &amp; EventBridge — architecture guidance for enterprise customers.</div>
+        <ul>
+          <li>Achieved SME designation on ELB, CloudWatch, and EventBridge — escalation point and internal knowledge authority.</li>
+          <li>Architected secure production environments for <b>20+ enterprise customers</b> (EKS/ECS/ELB) and resolved <b>250+ production escalations</b>.</li>
+          <li>Built a CloudWatch alarm visualization tool that reduced alarm-related resolution time by 60%, adopted by internal support teams.</li>
+          <li>Provided architecture guidance on EC2, VPC, Transit Gateway, ELB, Lambda, ECS/EKS, Global Accelerator, and CloudFormation in high-stakes enterprise events.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">Cloud Support Engineer — Networking &amp; Monitoring</div>
+        <div class="meta"><b>Amazon Web Services (AWS)</b> — Dallas, TX · Mar 2021 – Mar 2023</div>
+        <div class="summary">Deep networking &amp; monitoring resolution across the AWS platform — 800+ cases, SME in CloudWatch &amp; EventBridge.</div>
+        <ul>
+          <li>Resolved <b>800+ complex cases</b> across VPC, Route 53, ELB, CloudWatch, ASG, EventBridge, Lambda, Transit Gateway, and Global Accelerator; achieved SME in CloudWatch &amp; EventBridge.</li>
+          <li>Used packet-capture analysis, routing investigation, and OS performance tuning; supported large-scale events (LSEs). Built internal tooling that cut issue-resolution time by ~60%.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">Infrastructure Engineer II — Internal Networking</div>
+        <div class="meta"><b>Lumen Technologies (CenturyLink)</b> — Monroe, LA · May 2018 – Mar 2021</div>
+        <div class="summary">Large-scale network automation — powered the CenturyLink–Level3 merger across 11,000+ devices.</div>
+        <ul>
+          <li>Led the CenturyLink–Level3 network merger across <b>11,000+ devices</b> using Python and Ansible, automating large-scale DNS and configuration changes.</li>
+          <li>Administered global internal networks across APAC, EMEA, LATAM, and NA; delivered <b>30+ network designs</b> and cut an IP-deconfliction project's time by <b>50%</b>.</li>
+          <li>Strengthened security posture via FortiNAC device registration and classification.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">Research Assistant — Applied Optics &amp; Photonics</div>
+        <div class="meta"><b>Michigan Technological University</b> — Houghton, MI · 2017</div>
+        <ul>
+          <li>Contributed to research on a <b>passive metamaterial lens</b>, achieving <b>120× optical zoom</b>.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">Assistant System Engineer</div>
+        <div class="meta"><b>Tata Consultancy Services</b> — Gandhinagar, India · Nov 2015 – Dec 2016</div>
+        <ul>
+          <li>Developed 6 e-governance Android apps for the government secretariat using Java Spring MVC; built REST APIs achieving best-security certification for the Login API.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <div class="role">EETP Intern — Telecom Networks</div>
+        <div class="meta"><b>Bharat Sanchar Nigam Ltd. (BSNL)</b> — Ahmedabad, India · Jul 2013 – Dec 2014</div>
+        <ul>
+          <li>Analyzed PSTN &amp; TCP/IP networks, implemented fiber deployments, managed MSC operations, and designed virtual containers for EoMPLS links.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <p class="eyebrow">Selected work</p>
+    <h2 class="title">Projects</h2>
+    <div class="proj-grid">
+      <div class="proj">
+        <div class="ico">🚨</div>
+        <h3>Silent Backup-Failure RCA &amp; Self-Healing Watchdog</h3>
+        <p>Root-caused a 20-day <em>silent</em> backup failure — a shell pipefail + UID mismatch that logged success while writing nothing — then engineered backup-freshness alerting and a self-healing mount watchdog so the failure mode can't recur undetected. A real blameless-postmortem, detection, and automation story.</p>
+        <div class="tags"><span>SRE</span><span>Incident RCA</span><span>Prometheus Alerting</span><span>Bash / Python</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">📊</div>
+        <h3>Full-Stack Observability Platform</h3>
+        <p>Metrics, logs, and alerting across a hybrid Kubernetes + Proxmox estate: VictoriaMetrics + vmagent scraping every node, VM, and pod; Loki for logs via Alloy; Grafana dashboards and alert rules routed to Gotify. One pane of glass, defined entirely as code.</p>
+        <div class="tags"><span>VictoriaMetrics</span><span>Prometheus</span><span>Grafana</span><span>Loki</span><span>Alerting</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">🏠</div>
+        <h3>High-Performance Home AI &amp; Homelab Server</h3>
+        <p>Production-grade homelab on a 3-tier always-on / on-demand-WOL architecture across Peladn (Ryzen 7 7840HS), GMKtec EVO-X2 (Strix Halo 395+), Raspberry Pi 4, Intel NUC, and i9-14900K + RTX 5070. Fully GitOps-managed — entire state recoverable from git.</p>
+        <div class="tags"><span>Talos Linux</span><span>Flux CD</span><span>Proxmox VE</span><span>Kubernetes</span><span>OPNsense</span><span>SOPS+Age</span></div>
+        <a class="more" href="https://github.com/deepchhaiya/Homelab-ops" target="_blank" rel="noopener">View on GitHub →</a>
+      </div>
+      <div class="proj">
+        <div class="ico">🤖</div>
+        <h3>Self-Hosted AI Agent Platform — Hermes Agent</h3>
+        <p>OpenAI-compatible multi-LLM agent with a custom system-administrator skill embedding the full lab topology and 7 read-only helper scripts (Kubernetes, Grafana, Loki, VictoriaMetrics, Beszel, Proxmox, service health), with fallback to Gemini Flash and Claude Sonnet via one API surface.</p>
+        <div class="tags"><span>Hermes Agent</span><span>Ollama</span><span>Open WebUI</span><span>Hindsight (MCP)</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">🧠</div>
+        <h3>AI Memory Layer — Hindsight on Kubernetes</h3>
+        <p>Self-hosted persistent memory shared across AI agents (Claude Code, Cline, Hermes) over the Model Context Protocol. Native MCP server + web UI with hybrid retrieval — semantic + BM25 + knowledge-graph + temporal, cross-encoder reranked. Embedded PostgreSQL/pgvector with local embeddings + reranker; fact extraction offloaded to on-prem Ollama. Migrated from an earlier self-hosted mem0 build.</p>
+        <div class="tags"><span>Hindsight</span><span>MCP</span><span>pgvector</span><span>Ollama</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">📈</div>
+        <h3>AI-Powered Investment Analysis Platform</h3>
+        <p>Multi-workflow investment-intelligence system with a master orchestrator in n8n — integrating market data, technical indicators, and LLM-based sentiment analysis over Alpha Vantage and NewsAPI feeds.</p>
+        <div class="tags"><span>n8n</span><span>Ollama</span><span>PostgreSQL</span><span>Python</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">🔍</div>
+        <h3>Trino-Based S3 Log Analyzer (Wasabi)</h3>
+        <p>Containerized log-analysis tool enabling SQL-over-object-storage investigations directly on Wasabi S3 logs — cutting incident investigation time by ~40%.</p>
+        <div class="tags"><span>Python</span><span>Trino</span><span>Docker</span><span>S3 API</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">📊</div>
+        <h3>CloudWatch Alarm Visualization Tool (AWS)</h3>
+        <p>Internal tool modeling CloudWatch alarm state transitions to reduce alarm-related resolution time for support teams — adopted across internal AWS support.</p>
+        <div class="tags"><span>Python</span><span>CloudWatch API</span><span>AWS</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">🌊</div>
+        <h3>Lake Water Quality Simulator</h3>
+        <p>A web-based simulation model for lake water quality — built as a summer project (2017) while a master's student at Michigan Technological University, independent of the metamaterial-lens research.</p>
+        <div class="tags"><span>Web Simulator</span><span>JavaScript</span><span>Scientific Computing</span></div>
+        <a class="more" href="https://pages.mtu.edu/~cseo/LakeWaterQualitySimulator/Index.html" target="_blank" rel="noopener">Launch simulator →</a>
+      </div>
+      <div class="proj">
+        <div class="ico">⚙️</div>
+        <h3>Cisco IOS &amp; Junos Config Automation</h3>
+        <p>A Python (Netmiko) library to automate config change-management and collect device logs across Cisco and Juniper gear — securely storing credentials behind callable functions for repeatable network changes.</p>
+        <div class="tags"><span>Python</span><span>Netmiko</span><span>Cisco IOS</span><span>Junos</span></div>
+      </div>
+      <div class="proj">
+        <div class="ico">🔗</div>
+        <h3>Content-Addressable P2P Sharing (Simplified IPFS)</h3>
+        <p>A peer routing protocol based on IPFS + cloud architectures for storing and sharing content — backed by a Raspberry Pi NAS (HDD + SMB) with secure file storage and video compression.</p>
+        <div class="tags"><span>Java</span><span>IPFS</span><span>Raspberry Pi</span><span>NAS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOMELAB -->
+<section class="homelab" id="homelab">
+  <div class="wrap">
+    <p class="eyebrow">Always-on lab</p>
+    <h2 class="title">The Homelab — my production proving ground</h2>
+    <p class="lead">
+      A GitOps-managed, production-grade private cloud I design, operate, and break on purpose — where every pattern
+      I bring to work gets battle-tested first. Talos Linux + Kubernetes, declared entirely in git and fully
+      recoverable from it. <a href="https://github.com/deepchhaiya/Homelab-ops" target="_blank" rel="noopener" style="color:#93b4fb;">github.com/deepchhaiya/Homelab-ops →</a>
+    </p>
+    <div class="tiers">
+      <div class="tier">
+        <span class="badge">⚡ Tier 1 · Always-On Core</span>
+        <h3>Persistent platform</h3>
+        <div class="hw">Peladn (Ryzen 7 7840HS) · Raspberry Pi 4 · Intel NUC</div>
+        <p>Kubernetes control plane, storage &amp; NFS, the persistent services, and lightweight always-on LLM inference on the integrated GPU.</p>
+      </div>
+      <div class="tier">
+        <span class="badge">🧠 Tier 2 · AI Compute</span>
+        <h3>Local LLM workhorse</h3>
+        <div class="hw">GMKtec EVO-X2 — Strix Halo (Ryzen AI Max+ 395)</div>
+        <p>Talos worker with 128&nbsp;GB unified memory running large local models on <span class="em">AMD ROCm (gfx1151)</span> — hosts the AI agents, chat, and memory stack.</p>
+      </div>
+      <div class="tier">
+        <span class="badge">🚀 Tier 3 · On-Demand Burst</span>
+        <h3>GPU when it counts</h3>
+        <div class="hw">i9-14900K + RTX 5070 · Wake-on-LAN</div>
+        <p>Heavy CUDA inference that powers on only when needed and sleeps otherwise — peak performance without 24/7 power draw.</p>
+      </div>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><h4>🔄 GitOps &amp; IaC</h4><p class="em">Flux CD reconciles the whole cluster from git; secrets sealed with SOPS + Age. The entire platform is reproducible and recoverable from the repo alone.</p></div>
+      <div class="feat"><h4>🤖 Self-Hosted AI Stack</h4><p class="em">Ollama (ROCm + CUDA), a shared MCP-native memory layer (Hindsight — hybrid semantic/BM25/graph retrieval over pgvector), the Hermes multi-LLM agent, Open WebUI, and n8n AI workflows.</p></div>
+      <div class="feat"><h4>📊 Full Observability</h4><p class="em">VictoriaMetrics + vmagent for metrics, Loki for logs, Grafana dashboards, and Beszel — one pane of glass across every node, VM, and container.</p></div>
+      <div class="feat"><h4>🛡️ Resilient, Tiered Backups</h4><p class="em">Proxmox Backup Server with dedup + incremental change-detection, daily logical DB dumps to NFS, weekly USB-3 DAS copies, monthly retention — plus freshness monitoring and self-healing mount watchdogs.</p></div>
+      <div class="feat"><h4>🔐 Networking &amp; Security</h4><p class="em">OPNsense firewall/router, Tailscale mesh VPN for zero-trust remote access, and segmented VLANs — managed remotely from a Windows workstation.</p></div>
+      <div class="feat"><h4>🗂️ Self-Hosted Services</h4><p class="em">Nextcloud, Immich, Jellyfin, Miniflux, Karakeep, and SearXNG — all running on the same automated platform behind a single GitOps workflow.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="exp" id="skills">
+  <div class="wrap">
+    <p class="eyebrow">Toolbox</p>
+    <h2 class="title">Technical Skills</h2>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3><span class="dot"></span>Observability</h3>
+        <div class="chips"><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">VictoriaMetrics</span><span class="chip">Loki</span><span class="chip">OpenTelemetry</span><span class="chip">CloudWatch</span><span class="chip">Datadog</span><span class="chip">ELK</span><span class="chip">Wireshark</span><span class="chip">tcpdump / tshark</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>SRE / Reliability</h3>
+        <div class="chips"><span class="chip">SLOs / SLIs</span><span class="chip">Incident response</span><span class="chip">On-call</span><span class="chip">Root-cause analysis</span><span class="chip">MTTR reduction</span><span class="chip">Runbooks</span><span class="chip">Post-mortems</span><span class="chip">Alerting</span><span class="chip">Resilient backups / DR</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>Cloud</h3>
+        <div class="chips"><span class="chip">AWS</span><span class="chip">EC2 / VPC</span><span class="chip">ELB</span><span class="chip">CloudWatch</span><span class="chip">EventBridge</span><span class="chip">Lambda</span><span class="chip">ECS / EKS</span><span class="chip">Transit Gateway</span><span class="chip">Route 53</span><span class="chip">S3</span><span class="chip">CloudFormation</span><span class="chip">Azure</span><span class="chip">GCP</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>DevOps / IaC</h3>
+        <div class="chips"><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Helm</span><span class="chip">Terraform</span><span class="chip">Ansible</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">GitOps · Flux CD</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>Networking</h3>
+        <div class="chips"><span class="chip">TCP/IP</span><span class="chip">BGP</span><span class="chip">OSPF</span><span class="chip">MPLS</span><span class="chip">VLAN / VXLAN</span><span class="chip">VPN</span><span class="chip">SDN</span><span class="chip">OPNsense</span><span class="chip">FortiNAC</span><span class="chip">DNS</span><span class="chip">HSRP</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>Automation &amp; Platforms</h3>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Bash</span><span class="chip">REST APIs</span><span class="chip">n8n</span><span class="chip">Proxmox VE</span><span class="chip">Talos Linux</span><span class="chip">VMware ESXi</span><span class="chip">Linux</span><span class="chip">Git</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>AI / ML Ops</h3>
+        <div class="chips"><span class="chip">Ollama (ROCm + CUDA)</span><span class="chip">RAG pipelines</span><span class="chip">pgvector</span><span class="chip">MCP</span><span class="chip">Hindsight</span><span class="chip">n8n AI workflows</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="wrap">
+    <p class="eyebrow">Verified credentials</p>
+    <h2 class="title">Certifications</h2>
+    <div class="cert-grid">
+      <a class="cert-tile" href="https://www.credly.com/badges/d0499447-fadc-4da2-825d-c592f578c8ae/public_url" target="_blank" rel="noopener">
+        <div class="logo"><img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS" /></div>
+        <div class="cname">AWS Certified Solutions Architect — Associate</div>
+        <div class="cissuer">Amazon Web Services</div>
+        <div class="verify">Verify ↗</div>
+      </a>
+      <div class="cert-tile">
+        <div class="logo"><img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS" /></div>
+        <div class="cname">AWS Certified AI Practitioner</div>
+        <div class="cissuer">Amazon Web Services</div>
+      </div>
+      <div class="cert-tile">
+        <div class="logo"><img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="Kubernetes" /></div>
+        <div class="cname">Certified Kubernetes Administrator (CKA)</div>
+        <div class="cissuer">CNCF · In progress</div>
+      </div>
+      <a class="cert-tile" href="https://www.credly.com/badges/59dd148a-3ba6-4d09-b96c-dbcdaf36117b/public_url" target="_blank" rel="noopener">
+        <div class="logo"><img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS" /></div>
+        <div class="cname">Elastic Load Balancing — Subject Matter Expert</div>
+        <div class="cissuer">AWS · Credly</div>
+        <div class="verify">Verify ↗</div>
+      </a>
+      <a class="cert-tile" href="https://www.credly.com/badges/b7a0820f-0322-4713-8330-be9f44b67b37/public_url" target="_blank" rel="noopener">
+        <div class="logo"><img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS" /></div>
+        <div class="cname">CloudWatch — Subject Matter Expert</div>
+        <div class="cissuer">AWS · Credly</div>
+        <div class="verify">Verify ↗</div>
+      </a>
+      <a class="cert-tile" href="https://www.youracclaim.com/badges/e50abcf3-80ad-4e4f-8adc-a323c9c81efb/public_url" target="_blank" rel="noopener">
+        <div class="logo"><img src="https://cdn.simpleicons.org/cisco" alt="Cisco" /></div>
+        <div class="cname">Cisco Certified Network Associate (R&amp;S)</div>
+        <div class="cissuer">Cisco</div>
+        <div class="verify">Verify ↗</div>
+      </a>
+      <div class="cert-tile">
+        <div class="logo badge">BSNL</div>
+        <div class="cname">Platinum · Gold · Silver Certifications</div>
+        <div class="cissuer">Bharat Sanchar Nigam Ltd. — telecom</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="exp" id="publications">
+  <div class="wrap">
+    <p class="eyebrow">Writing &amp; media</p>
+    <h2 class="title">Publications &amp; Media</h2>
+    <div class="pub-list">
+      <div class="pub">
+        <div>
+          <b>Monitor Java apps on Tomcat with Amazon CloudWatch Application Signals</b>
+          <span>Co-author · AWS Cloud Operations Blog · May 2024</span>
+        </div>
+        <a class="go" href="https://aws.amazon.com/blogs/mt/monitor-java-apps-running-on-tomcat-server-with-amazon-cloudwatch-application-signals-preview/" target="_blank" rel="noopener">Read article ↗</a>
+      </div>
+      <div class="pub">
+        <div>
+          <b>XPath / DOM selectors for CloudWatch Synthetics GUI canaries</b>
+          <span>Video author · AWS Knowledge Center</span>
+        </div>
+        <a class="go" href="https://www.youtube.com/watch?v=aLSfY2LgcuQ&amp;feature=youtu.be" target="_blank" rel="noopener">Watch video ↗</a>
+      </div>
+      <div class="pub">
+        <div>
+          <b>Proportional Temperature Controller for Food-Grade Rotary Roaster Using RF Transceivers</b>
+          <span>Author · IJREAT Journal · Vol. 4, Issue 2 · May 2016</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <p class="eyebrow">Academic background</p>
+    <h2 class="title">Education</h2>
+    <div class="edu-list">
+      <div class="edu"><b>M.S., Telecommunications Engineering</b><span>University of Texas at Dallas · 2017 – 2019 · GPA 3.4</span></div>
+      <div class="edu"><b>B.E., Electronics &amp; Communication Engineering</b><span>Gujarat Technological University · 2011 – 2015 · GPA 3.8</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="eyebrow">Get in touch</p>
+    <h2 class="title">Let's build something resilient.</h2>
+    <p class="lead">Open to conversations on site reliability, observability, platform, and cloud infrastructure engineering. The fastest way to reach me:</p>
+    <div class="contact-grid">
+      <div class="contact-card"><div class="k">Email</div><a href="mailto:deepkchhaiya@gmail.com">deepkchhaiya@gmail.com</a></div>
+      <div class="contact-card"><div class="k">LinkedIn</div><a href="https://linkedin.com/in/deep-chhaiya" target="_blank" rel="noopener">in/deep-chhaiya</a></div>
+      <div class="contact-card"><div class="k">GitHub</div><a href="https://github.com/deepchhaiya" target="_blank" rel="noopener">github.com/deepchhaiya</a></div>
+      <div class="contact-card"><div class="k">Location</div><span class="v">Dallas–Fort Worth, TX</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <span id="yr"></span> Deep Chhaiya · SRE · Observability · Cloud · Built &amp; hosted on a self-managed Kubernetes (Talos + Flux CD) homelab.
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('#navlinks a').forEach(function (a) {
+    a.addEventListener('click', function () { document.getElementById('navlinks').classList.remove('open'); });
+  });
+</script>
+</body>
+</html>

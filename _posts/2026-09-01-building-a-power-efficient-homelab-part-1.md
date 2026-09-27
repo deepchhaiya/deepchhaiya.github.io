@@ -43,11 +43,11 @@ Here's the inventory I was working with — a genuinely mismatched set of mini P
 
 The plan: make the Pi 4 and the Peladn my 24×7 machines, and use everything else as worker nodes that could be powered on when I actually needed the extra compute. That solved the power problem, but it exposed a new gap — none of these machines had enough memory to comfortably run larger models at a decent token rate.
 
-After some research and budget math, I picked up a **GMKtek EVO-X2** with 96 GB of unified memory to anchor the cluster's AI workloads.
+After some research and budget math, I picked up a **GMKtek Evo-X2** with 96 GB of unified memory to anchor the cluster's AI workloads.
 
-With that decided, I hit the next problem: my main server was no longer a 24×7 machine, which meant I needed to rethink storage entirely — and put a real **3-2-1 backup strategy** in place instead of hoping nothing failed. The Peladn had no clean way to attach multiple HDDs over PCIe, but it did have a USB-C Gen 3 Thunderbolt port, so I added a DAS with 11 TB of drives as the primary array, plus a 26 TB external Seagate HDD for periodic backups connected to Evo-x2 which later I decided to include as my alternate control node and 24 x 7 machine.
+With that decided, I hit the next problem: my main server was no longer a 24×7 machine, which meant I needed to rethink storage entirely — and put a real **3-2-1 backup strategy** in place instead of hoping nothing failed. The Peladn had no clean way to attach multiple HDDs over PCIe, but it did have a USB-C Gen 3 Thunderbolt port, so I added a DAS with 11 TB of drives as the primary array, plus a 26 TB external Seagate HDD for periodic backups connected to Evo-X2 which later I decided to include as my alternate control node and 24 x 7 machine.
 
-![Hardware inventory: six reused machines plus the purchased EVO-X2, grouped into always-on 24×7 nodes and on-demand worker nodes, with an 11 TB DAS on the Peladn and a 26 TB drive on the EVO-X2 for backups.](/assets/images/hardware-inventory.svg)
+![Hardware inventory: six reused machines plus the purchased Evo-X2, grouped into always-on 24×7 nodes and on-demand worker nodes, with an 11 TB DAS on the Peladn and a 26 TB drive on the Evo-X2 for backups.](/assets/images/hardware-inventory.svg)
 *The fleet at a glance — what stays on, what gets woken up, and where the storage hangs.*
 
 ## Decision 2: Picking the OS Stack
@@ -91,6 +91,6 @@ None of this matters if the network underneath it is an afterthought. I picked u
 
 ## Where Things Stand Now
 
-That's the full parts-and-decisions story: six mismatched machines turned into a Proxmox + Talos cluster, a DAS-backed 3-2-1 backup setup, a 3D-printed rack that actually stays cool, and an OPNsense-based network with proper IDS/IPS in front of it all — built almost entirely from hardware I already owned, plus one deliberate purchase (the EVO-X2) to close the memory gap for bigger models.
+That's the full parts-and-decisions story: six mismatched machines turned into a Proxmox + Talos cluster, a DAS-backed 3-2-1 backup setup, a 3D-printed rack that actually stays cool, and an OPNsense-based network with proper IDS/IPS in front of it all — built almost entirely from hardware I already owned, plus one deliberate purchase (the Evo-X2) to close the memory gap for bigger models.
 
-The parts list and the plumbing were the easy part in hindsight. The next post in this series will get into the actual Kubernetes and hybrid-AI workload setup — how workloads get scheduled across such an uneven fleet, and what running self-hosted models alongside hosted ones looks like in practice. If you're working through a similar "I have too many old machines and one good idea" problem, I'd genuinely like to hear how you approached it.
+The parts list and the plumbing were the easy part in hindsight. The next post in this series covers installing Proxmox across the fleet and setting up the GitHub repo and secrets workflow that everything else builds on. The Kubernetes side, and how workloads get scheduled across such an uneven fleet, follows in Part 3. If you're working through a similar "I have too many old machines and one good idea" problem, I'd genuinely like to hear how you approached it.

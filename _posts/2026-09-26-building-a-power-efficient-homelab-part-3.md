@@ -9,7 +9,7 @@ excerpt: >-
   plane and Raspberry Pi worker, Flux CD, and what I got wrong along the way.
 ---
 
-My main goal was using Peladn as my main 24/7 "Base Station", Raspberry Pi 4 as main monitoring server and later Evo-x2 as my main AI machine with the Intel NUC, Dell R610 and i9 Server as "On-Demand Reinforcements" via Wake-on-LAN (WOL) to mimic the production type power efficient environment.
+My main goal was using Peladn as my main 24/7 "Base Station", Raspberry Pi 4 as main monitoring server and later Evo-X2 as my main AI machine with the Intel NUC, Dell R610 and i9 Server as "On-Demand Reinforcements" via Wake-on-LAN (WOL) to mimic the production type power efficient environment.
 
 Below is the blueprint where eventually I divided 30+ containers across different hardwares to maximize the usage of Radeon 780M (Peladn), Radeon 8060S (Evo-X2) and the NVIDIA GPU (i9 Server).
 
