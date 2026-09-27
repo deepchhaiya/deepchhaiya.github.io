@@ -39,6 +39,7 @@ cd Homelab-ops
 Before anything from that repo can go into Flux or Argo CD, it needs a way to hold secrets safely — that's what this step is for. I implemented a **Zero-Trust** workstation model. My infrastructure secrets are encrypted using SOPS and Age. The private keys are never stored on disk. I use the Bitwarden CLI to fetch the keys from my self-hosted Vaultwarden directly into the environment memory only during the encryption process.
 
 ![Zero-trust secrets flow: age-keygen generates a keypair once, the private key is stored in Vaultwarden, the Bitwarden CLI pulls it into session memory only, SOPS uses that in-memory key to encrypt or decrypt files, and only the encrypted files are committed to the GitHub repo.](/assets/images/sops-secrets-flow.svg)
+*Secrets flow: the age key lives in Vaultwarden and only ever reaches session memory.*
 
 So below are the steps to install the needed tools:
 

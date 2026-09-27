@@ -27,6 +27,7 @@ That was the turning point. I had several other PCs sitting idle, so instead of 
 The chart below is the lab's power draw, tracked in Home Assistant from a smart plug and from the UPS — the UPS is monitored by a [NUT](https://networkupstools.org/) service running on the cluster.
 
 ![Home Assistant chart of the homelab's power consumption over time, pulled from a smart plug and a NUT-monitored UPS.](/assets/images/power-usage-home-assistant.jpg)
+*Lab power draw in Home Assistant, from a smart plug and the NUT-monitored UPS.*
 
 The honest accounting: the old single node idled at about 110 W. The new always-on core — three machines, a proper 3-2-1 backup, better support for larger AI models, and 96 GB of unified memory — idles at about 120 W. So in raw watts I didn't really come out ahead. What I got instead is a dynamic, decentralized lab that does far more per watt: the heavy compute nodes stay powered off until I need them, and nothing is a single point of failure anymore.
 
@@ -77,10 +78,12 @@ With that sorted, the cluster came together: every machine runs a Talos VM on to
 Six machines crammed into a closet need airflow, not just a shelf. I 3D-printed a rack based on models from [kellerlabs/homeracker](https://github.com/kellerlabs/homeracker), along with a custom Pi 4 case: a front intake fan pulls air in and pushes it out the back, with an exposed side window for an ice tower fan to pull heat off the CPU — enough headroom that I could bump CPU and GPU frequencies in the config for sustained 24×7 operation.
 
 ![3D-printed homelab rack with six machines and a custom Raspberry Pi 4 case](/assets/images/homelab-rack.jpg)
+*The 3D-printed rack, based on kellerlabs/homeracker, with the custom Pi 4 case.*
 
 I also printed a set of ducts to route airflow for the mini PCs, and repurposed two 90 mm fans salvaged from a dead HP Z420 (failed motherboard) alongside an ESP32 controller to build a venting system: it ramps up to full speed when the HVAC kicks in to pull in cold air, then drops to a lower speed to push warm air out toward the pantry door the rest of the time.
 
 ![ESP32-controlled venting system built from salvaged 90 mm fans](/assets/images/homelab-venting.jpg)
+*Venting system: two salvaged 90 mm fans driven by an ESP32.*
 
 ![Circuit diagram for the ESP32 fan controller](/assets/images/fan-controller-circuit.png)
 *Circuit diagram for the ESP32-based venting controller.*

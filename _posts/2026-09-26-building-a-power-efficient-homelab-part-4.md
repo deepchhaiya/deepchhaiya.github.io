@@ -47,6 +47,7 @@ exportfs: Failed to stat /mnt/pvedas/n8n: No such file or directory
 So instead of using CT 200, I passed the Wavlink DAS through directly and added it as a disk on the Proxmox host on the Peladn machine.
 
 ![Proxmox Disks view on the Peladn host showing the 12 TB Toshiba drive from the DAS formatted as XFS.](/assets/images/proxmox-disks-das.png)
+*The DAS on the Peladn host, formatted XFS.*
 
 Once the disk lived on the host, the storage LXC had no job left. Its only responsibility had been serving NFS, and the DAS was physically attached to the very machine whose containers were mounting it over the network. I shut it down, set `onboot 0`, and destroyed it a couple of weeks later.
 

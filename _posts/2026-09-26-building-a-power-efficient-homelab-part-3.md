@@ -60,6 +60,7 @@ I used the `debian-13-standard` template from the Proxmox UI (**CT Templates > T
 You can use the Templates button under CT Templates to explore available templates or can upload your own.
 
 ![Proxmox VE 9.2 web UI on the Peladn node showing the CT Templates page, with the Templates button and the debian-13-standard template listed.](/assets/images/proxmox-ct-templates.png)
+*Proxmox CT Templates, with the debian-13-standard template.*
 
 Using Shell:
 
@@ -83,6 +84,7 @@ CT 202 (media and AI) and CT 203 (home ops), as they actually run today:
 You can use the configuration wizard to set up the LXCs.
 
 ![Proxmox Create: LXC Container wizard on the General tab, with Unprivileged container and Nesting both ticked and the Create CT button highlighted.](/assets/images/proxmox-create-lxc-wizard.png)
+*LXC creation wizard: unprivileged, with nesting enabled.*
 
 The part that is not in the creation wizard is the config file. After creating them I stopped both and edited `/etc/pve/lxc/202.conf`:
 
@@ -209,6 +211,7 @@ kubectl get nodes
 Putting the labels in the **machine config** rather than running `kubectl label node` is a small thing that is useful to save later headaches. The label survives a node rebuild, which means my scheduling rules are part of the infrastructure definition and not something I have to remember to reapply at 11 pm after reflashing a Pi.
 
 ![Output of kubectl get nodes --show-labels showing the tier labels: tier=always-on on the Raspberry Pi 4, tier=ai-worker on the Evo-X2, and tier=on-demand on the Dell R610 and Intel NUC.](/assets/images/kubectl-get-nodes-tier-labels.png)
+*Nodes and their tier labels, set in the Talos machine configs.*
 
 `tier=always-on` and `arch=arm64` are the two labels that do the actual work later. Anything pinned to `tier=always-on` will keep running when the WOL machines are asleep, and `arch=arm64` is a reminder to myself that only multi-arch images land there.
 

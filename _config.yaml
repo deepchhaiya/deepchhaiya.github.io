@@ -4,9 +4,8 @@ tagline: "Build logs on the way to AI infra"
 description: >-
   Homelab build logs, phase by phase — hardware, networking, virtualization,
   storage and self-hosted services — on the way to running AI infrastructure at home.
-author:
-  name: "Deep Chhaiya"
-  email: "deepkchhaiya@gmail.com"
+author: "Deep Chhaiya"
+email: "deepkchhaiya@gmail.com"
 
 # --- URLs ---
 url: "https://deepchhaiya.github.io"
