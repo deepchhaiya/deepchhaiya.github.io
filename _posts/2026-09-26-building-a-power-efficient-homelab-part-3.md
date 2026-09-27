@@ -238,12 +238,16 @@ flux bootstrap github `
   --personal
 ```
 
-Then the Age private key goes into the cluster once, as a secret Flux uses to decrypt at apply time:
+Then the Age private key goes into the cluster once, as a secret Flux uses to decrypt at apply time. Same rule as before — the key comes straight from Vaultwarden into memory and never lands in a file on the laptop:
 
 ```powershell
+$env:SOPS_AGE_KEY = (bw get notes "HOMELAB_SOPS_KEY") -join "`n"
+
 kubectl create secret generic sops-age `
   --namespace=flux-system `
-  --from-file=age.agekey=age.key
+  --from-literal=age.agekey="$env:SOPS_AGE_KEY"
+
+Remove-Item Env:SOPS_AGE_KEY
 ```
 
 Which is what makes the `decryption` block in [`clusters/homelab/apps.yaml`](https://github.com/deepchhaiya/Homelab-ops/tree/main/kubernetes/clusters/homelab) work:
