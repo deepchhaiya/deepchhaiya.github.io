@@ -17,6 +17,7 @@ This one is short on purpose. Most of the work lives in the OPNsense GUI rather 
 ### The layout
 
 ![Network diagram: the ISP ONT feeds igb1 on the Lanner FW-7551 running OPNsense. igb4 goes straight to the Peladn, igb2 to the rack switch (Dell R610, Intel NUC, i9 workstation, Raspberry Pi 4, EVO-X2), igb3 to the house switch (second Deco, other LAN devices) and igb5 to the main Deco.](/assets/images/cluster-network.jpg)
+
 *How everything connects to the OPNsense router.*
 
 Everything goes through a **Lanner FW-7551** running **OPNsense**. It has 6 Gigabit Ethernet ports and currently I am using one as WAN port and four other as LAN ports:
