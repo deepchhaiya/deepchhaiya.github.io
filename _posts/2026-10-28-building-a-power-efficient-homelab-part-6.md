@@ -100,7 +100,7 @@ OPNsense also runs **Suricata**. I turned it on with a basic ruleset and kept it
 
 I wanted a direct Thunderbolt/USB4 cable between the Peladn and the Evo-X2 as a private 10.10.10.x link, so backups to PBS would skip the LAN. On paper both machines support it. In practice the link never came up. Across several BIOS settings and port combinations, neither host saw a peer device, and `dmesg` showed no `thunderbolt-net` events on either side. I concluded it was a firmware limitation and stopped.
 
-It turned out not to matter. The backups and the failover restores run over the normal **2.5 GbE LAN**, and that has been plenty. The lesson I took: try the boring option first, and only chase the fast path once the boring one is actually too slow.
+It turned out not to matter. The backups and the failover restores run over the normal **gigabit LAN**, and that has been enough. The lesson I took: try the boring option first, and only chase the fast path once the boring one is actually too slow.
 
 ### What I would change next
 
